@@ -12,6 +12,14 @@ public class Task {
     private String description;
     private boolean completed;
 
+    public Task() {
+    }
+    
+    public Task(String title, boolean completed) {
+    this.title = title;
+    this.completed = completed;
+}
+
     // Getters and Setters
     public Long getId() {
         return id;
