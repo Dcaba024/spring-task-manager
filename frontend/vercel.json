@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/tasks",
+      "destination": "http://taskmanager-backend-env.eba-76essuuz.us-east-2.elasticbeanstalk.com/api/tasks"
+    },
+    {
+      "source": "/api/tasks/:path*",
+      "destination": "http://taskmanager-backend-env.eba-76essuuz.us-east-2.elasticbeanstalk.com/api/tasks/:path*"
+    }
+  ]
+}
