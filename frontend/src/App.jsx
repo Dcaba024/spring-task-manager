@@ -72,6 +72,10 @@ function App() {
 
   useEffect(() => {
     fetchTasks();
+
+    const intervalId = setInterval(fetchTasks, 5000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
