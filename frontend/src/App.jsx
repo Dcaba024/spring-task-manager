@@ -73,9 +73,25 @@ function App() {
   useEffect(() => {
     fetchTasks();
 
-    const intervalId = setInterval(fetchTasks, 5000);
+    const fetchVisibleTasks = () => {
+      if (!document.hidden) {
+        fetchTasks();
+      }
+    };
 
-    return () => clearInterval(intervalId);
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        fetchTasks();
+      }
+    };
+
+    const intervalId = setInterval(fetchVisibleTasks, 5000);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(intervalId);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   return (
