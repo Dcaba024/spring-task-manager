@@ -1,28 +1,30 @@
-/* Dark Mode Task Manager Styles */
 :root {
-  --primary-color: #6366f1;
-  --primary-hover: #7c3aed;
-  --success-color: #10b981;
-  --danger-color: #ef4444;
-  --warning-color: #f59e0b;
+  --aqua: #008e97;
+  --aqua-bright: #00a3ad;
+  --orange: #fc4c02;
+  --orange-hover: #d84300;
+  --navy: #005778;
+  --deep-navy: #062b3a;
+  --foam: #e7fbfc;
+  --white: #ffffff;
+  --danger-color: #d92d20;
 
-  /* Dark theme colors */
-  --bg-primary: #0f172a;      /* Very dark blue-gray */
-  --bg-secondary: #1e293b;    /* Dark blue-gray */
-  --bg-tertiary: #334155;     /* Medium blue-gray */
-  --bg-accent: #475569;       /* Light blue-gray */
+  --bg-primary: #d8f5ef;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f7fdfe;
+  --bg-accent: #e6f7f8;
 
-  --text-primary: #f8fafc;     /* Almost white */
-  --text-secondary: #cbd5e1;   /* Light gray */
-  --text-muted: #94a3b8;      /* Muted gray */
+  --text-primary: #072f3d;
+  --text-secondary: #41616b;
+  --text-muted: #72878e;
 
-  --border-color: #334155;    /* Medium blue-gray */
-  --border-hover: #475569;    /* Light blue-gray */
+  --border-color: #b9e1e4;
+  --border-hover: #008e97;
 
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+  --shadow-sm: 0 1px 2px 0 rgb(6 43 58 / 0.08);
+  --shadow: 0 6px 16px -10px rgb(6 43 58 / 0.35);
+  --shadow-md: 0 12px 24px -14px rgb(6 43 58 / 0.45);
+  --shadow-lg: 0 24px 70px -36px rgb(0 87 120 / 0.55);
 
   --border-radius: 8px;
   --border-radius-lg: 12px;
@@ -41,7 +43,10 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background:
+    radial-gradient(circle at top left, rgb(252 76 2 / 0.16), transparent 28rem),
+    radial-gradient(circle at bottom right, rgb(0 87 120 / 0.16), transparent 32rem),
+    linear-gradient(135deg, #d8f5ef 0%, #bdeee6 45%, #e8fbf8 100%);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -53,18 +58,19 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 2rem 1rem;
+  padding: 3rem 1rem;
 }
 
 .app {
   width: 100%;
-  max-width: 500px;
+  max-width: 540px;
   background: var(--bg-secondary);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
-  padding: 2rem;
+  padding: 2.25rem;
   position: relative;
   overflow: hidden;
+  border: 1px solid rgb(0 142 151 / 0.22);
 }
 
 .app::before {
@@ -73,8 +79,8 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  height: 6px;
+  background: linear-gradient(90deg, var(--aqua), var(--orange), var(--navy));
 }
 
 /* Header */
@@ -84,11 +90,12 @@ body {
 }
 
 .app-header h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--gray-900);
+  font-size: 2.65rem;
+  line-height: 1.05;
+  font-weight: 800;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  background: linear-gradient(135deg, var(--navy), var(--aqua), var(--orange));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -120,13 +127,14 @@ body {
   transition: all 0.2s ease;
   background: var(--bg-tertiary);
   color: var(--text-primary);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9);
 }
 
 .task-input:focus {
   outline: none;
-  border-color: var(--primary-color);
-  background: var(--bg-secondary);
-  box-shadow: 0 0 0 3px rgb(99 102 241 / 0.2);
+  border-color: var(--aqua);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgb(0 142 151 / 0.14);
 }
 
 .task-input:disabled {
@@ -136,7 +144,7 @@ body {
 
 .add-button {
   padding: 0.875rem 1.5rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  background: linear-gradient(135deg, var(--orange), var(--orange-hover));
   color: white;
   border: none;
   border-radius: var(--border-radius);
@@ -150,6 +158,7 @@ body {
 .add-button:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, #ff641f, var(--orange-hover));
 }
 
 .add-button:active {
@@ -164,12 +173,12 @@ body {
 
 /* Error Message */
 .error-message {
-  background: rgb(239 68 68 / 0.1);
+  background: rgb(217 45 32 / 0.08);
   color: var(--danger-color);
   padding: 0.75rem 1rem;
   border-radius: var(--border-radius);
   margin-bottom: 1.5rem;
-  border: 1px solid rgb(239 68 68 / 0.2);
+  border: 1px solid rgb(217 45 32 / 0.18);
   font-weight: 500;
 }
 
@@ -229,11 +238,12 @@ body {
 .task-card:hover {
   box-shadow: var(--shadow);
   border-color: var(--border-hover);
+  transform: translateY(-1px);
 }
 
 .task-card.completed {
   background: var(--bg-accent);
-  border-color: var(--success-color);
+  border-color: var(--aqua);
 }
 
 .task-card.completed::before {
@@ -243,7 +253,7 @@ body {
   top: 0;
   bottom: 0;
   width: 4px;
-  background: var(--success-color);
+  background: var(--aqua);
   border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
@@ -258,9 +268,9 @@ body {
 .checkbox {
   width: 24px;
   height: 24px;
-  border: 2px solid var(--border-color);
+  border: 2px solid var(--aqua);
   border-radius: 4px;
-  background: var(--bg-secondary);
+  background: var(--white);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -272,12 +282,13 @@ body {
 }
 
 .checkbox:hover {
-  border-color: var(--primary-color);
+  border-color: var(--orange);
+  box-shadow: 0 0 0 4px rgb(252 76 2 / 0.12);
 }
 
 .checkbox.checked {
-  background: var(--success-color);
-  border-color: var(--success-color);
+  background: var(--aqua);
+  border-color: var(--aqua);
 }
 
 .checkbox:disabled {
@@ -302,7 +313,7 @@ body {
 
 /* Delete Button */
 .delete-button {
-  background: none;
+  background: rgb(252 76 2 / 0.08);
   border: none;
   cursor: pointer;
   font-size: 1.25rem;
@@ -314,7 +325,7 @@ body {
 }
 
 .delete-button:hover {
-  background: rgb(239 68 68 / 0.1);
+  background: rgb(252 76 2 / 0.18);
   opacity: 1;
 }
 
@@ -332,8 +343,8 @@ body {
 
 .task-count {
   font-size: 0.875rem;
-  color: var(--text-secondary);
-  font-weight: 500;
+  color: var(--navy);
+  font-weight: 700;
 }
 
 /* Responsive Design */

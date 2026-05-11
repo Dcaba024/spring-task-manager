@@ -78,7 +78,7 @@ function App() {
     <div className="app-container">
       <main className="app">
         <header className="app-header">
-          <h1>✨ Task Manager</h1>
+          <h1>Make it happen</h1>
           <p className="subtitle">Stay organized and get things done</p>
         </header>
 
