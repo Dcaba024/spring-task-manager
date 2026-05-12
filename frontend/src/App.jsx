@@ -85,7 +85,7 @@ function App() {
       }
     };
 
-    const intervalId = setInterval(fetchVisibleTasks, 5000);
+    const intervalId = setInterval(fetchVisibleTasks, 15000);
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
