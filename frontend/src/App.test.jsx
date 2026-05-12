@@ -58,4 +58,28 @@ describe('Task Manager app', () => {
     expect(screen.getByText('Write frontend test')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('What needs to be done?')).toHaveValue('')
   })
+
+  it('keeps the task input usable during background refreshes', async () => {
+    const user = userEvent.setup()
+    axios.get
+      .mockResolvedValueOnce({
+        data: [
+          { id: 1, title: 'Learn testing', completed: false },
+        ],
+      })
+      .mockReturnValueOnce(new Promise(() => {}))
+
+    render(<App />)
+
+    await screen.findByText('Learn testing')
+
+    const input = screen.getByPlaceholderText('What needs to be done?')
+    await user.type(input, 'Keep typing')
+
+    document.dispatchEvent(new Event('visibilitychange'))
+
+    expect(axios.get).toHaveBeenCalledTimes(2)
+    expect(input).toHaveValue('Keep typing')
+    expect(input).not.toBeDisabled()
+  })
 })

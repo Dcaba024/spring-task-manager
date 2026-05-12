@@ -9,12 +9,15 @@ const API_URL = import.meta.env.PROD
 function App() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loadingTasks, setLoadingTasks] = useState(false);
+  const [savingTask, setSavingTask] = useState(false);
   const [error, setError] = useState("");
 
-  const fetchTasks = async () => {
+  const fetchTasks = async ({ showLoading = false } = {}) => {
     try {
-      setLoading(true);
+      if (showLoading) {
+        setLoadingTasks(true);
+      }
       const response = await axios.get(API_URL);
       setTasks(response.data);
       setError("");
@@ -22,7 +25,9 @@ function App() {
       console.error("Error fetching tasks:", error);
       setError("Failed to load tasks");
     } finally {
-      setLoading(false);
+      if (showLoading) {
+        setLoadingTasks(false);
+      }
     }
   };
 
@@ -31,30 +36,30 @@ function App() {
     if (!title.trim()) return;
 
     try {
-      setLoading(true);
+      setSavingTask(true);
       const response = await axios.post(API_URL, { title, completed: false });
-      setTasks([...tasks, response.data]);
+      setTasks(currentTasks => [...currentTasks, response.data]);
       setTitle("");
       setError("");
     } catch (error) {
       console.error("Error creating task:", error);
       setError("Failed to create task");
     } finally {
-      setLoading(false);
+      setSavingTask(false);
     }
   };
 
   const deleteTask = async (id) => {
     try {
-      setLoading(true);
+      setSavingTask(true);
       await axios.delete(`${API_URL}/${id}`);
-      setTasks(tasks.filter(task => task.id !== id));
+      setTasks(currentTasks => currentTasks.filter(task => task.id !== id));
       setError("");
     } catch (error) {
       console.error("Error deleting task:", error);
       setError("Failed to delete task");
     } finally {
-      setLoading(false);
+      setSavingTask(false);
     }
   };
 
@@ -71,7 +76,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetchTasks();
+    fetchTasks({ showLoading: true });
 
     const fetchVisibleTasks = () => {
       if (!document.hidden) {
@@ -110,14 +115,14 @@ function App() {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="What needs to be done?"
               className="task-input"
-              disabled={loading}
+              disabled={savingTask}
             />
             <button
               type="submit"
               className="add-button"
-              disabled={loading || !title.trim()}
+              disabled={savingTask || !title.trim()}
             >
-              {loading ? "..." : "Add Task"}
+              {savingTask ? "..." : "Add Task"}
             </button>
           </div>
         </form>
@@ -129,11 +134,11 @@ function App() {
         )}
 
         <section className="task-list">
-          {loading && tasks.length === 0 && (
+          {loadingTasks && tasks.length === 0 && (
             <div className="loading">Loading tasks...</div>
           )}
 
-          {tasks.length === 0 && !loading ? (
+          {tasks.length === 0 && !loadingTasks ? (
             <div className="empty-state">
               <div className="empty-icon">📝</div>
               <h3>No tasks yet</h3>
@@ -146,7 +151,7 @@ function App() {
                   <button
                     className={`checkbox ${task.completed ? 'checked' : ''}`}
                     onClick={() => toggleComplete(task.id)}
-                    disabled={loading}
+                    disabled={savingTask}
                   >
                     {task.completed && "✓"}
                   </button>
@@ -157,7 +162,7 @@ function App() {
                 <button
                   className="delete-button"
                   onClick={() => deleteTask(task.id)}
-                  disabled={loading}
+                  disabled={savingTask}
                   title="Delete task"
                 >
                   🗑️
